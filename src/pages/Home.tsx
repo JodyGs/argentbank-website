@@ -1,6 +1,6 @@
 import FeatureCard from '../components/FeatureCard'
 
-const features = [
+const FEATURES = [
   {
     icon: '/icon-chat.png',
     iconAlt: 'Chat Icon',
@@ -37,7 +37,7 @@ export default function Home() {
       </div>
       <section className="features">
         <h2 className="sr-only">Features</h2>
-        {features.map((feature) => (
+        {FEATURES.map((feature) => (
           <FeatureCard key={feature.title} {...feature} />
         ))}
       </section>

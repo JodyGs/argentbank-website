@@ -7,7 +7,7 @@ interface Account {
   description: string
 }
 
-const accounts: Account[] = [
+const ACCOUNTS: Account[] = [
   {
     title: 'Argent Bank Checking (x8349)',
     amount: '$2,082.79',
@@ -36,7 +36,7 @@ export default function User() {
         <Button className="edit-button">Edit Name</Button>
       </div>
       <h2 className="sr-only">Accounts</h2>
-      {accounts.map((account) => (
+      {ACCOUNTS.map((account) => (
         <AccountCard key={account.title} {...account} />
       ))}
     </main>

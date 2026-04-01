@@ -13,6 +13,12 @@ body {
   min-height: 100vh;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .main {
   flex: 1;
 }
@@ -154,17 +160,23 @@ body {
 }
 
 .button-primary {
-  border-color: #00bc77;
+  border: 1px solid #00bc77;
   background-color: #00bc77;
   color: #fff;
+  font-family: inherit;
   font-weight: bold;
   padding: 8px;
   font-size: 1.1rem;
   cursor: pointer;
 }
 
-.button-primary.sign-in-button,
-.button-primary.transaction-button {
+.sign-in-button {
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.transaction-button {
   display: block;
   width: 100%;
   margin-top: 1rem;
@@ -263,9 +275,6 @@ body {
 .header {
   color: #fff;
   margin-bottom: 2rem;
-}
-
-.transaction-button {
 }
 
 @media (min-width: 720px) {
