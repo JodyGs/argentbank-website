@@ -277,6 +277,37 @@ body {
   margin-bottom: 2rem;
 }
 
+.edit-form {
+  margin-top: 1rem;
+}
+
+.edit-inputs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.edit-inputs .input-wrapper {
+  margin-bottom: 0.5rem;
+}
+
+.edit-inputs .input-wrapper input {
+  font-size: 1rem;
+  padding: 8px;
+}
+
+.edit-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.error-message {
+  color: #ff4444;
+  margin: 0.5rem 0;
+}
+
 @media (min-width: 720px) {
   .account {
     flex-direction: row;

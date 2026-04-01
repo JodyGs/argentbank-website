@@ -1,12 +1,21 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import type { RootState, AppDispatch } from '../store/store'
+import { logout } from '../store/authSlice'
+import { clearProfile } from '../store/userSlice'
 
-interface HeaderProps {
-  isLoggedIn: boolean
-  userName?: string
-  onSignOut: () => void
-}
+export default function Header() {
+  const dispatch = useDispatch<AppDispatch>()
+  const navigate = useNavigate()
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
+  const profile = useSelector((state: RootState) => state.user.profile)
 
-export default function Header({ isLoggedIn, userName, onSignOut }: HeaderProps) {
+  const handleSignOut = () => {
+    dispatch(logout())
+    dispatch(clearProfile())
+    navigate('/')
+  }
+
   return (
     <nav className="main-nav">
       <Link className="main-nav-logo" to="/">
@@ -22,9 +31,9 @@ export default function Header({ isLoggedIn, userName, onSignOut }: HeaderProps)
           <>
             <Link className="main-nav-item" to="/profile">
               <i className="fa fa-user-circle"></i>
-              {' '}{userName}
+              {' '}{profile?.firstName}
             </Link>
-            <Link className="main-nav-item" to="/" onClick={onSignOut}>
+            <Link className="main-nav-item" to="/" onClick={handleSignOut}>
               <i className="fa fa-sign-out"></i>
               {' '}Sign Out
             </Link>

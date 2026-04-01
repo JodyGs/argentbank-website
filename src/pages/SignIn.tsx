@@ -1,22 +1,27 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import type { AppDispatch, RootState } from '../store/store'
+import { login } from '../store/authSlice'
+import { getProfile } from '../store/userSlice'
 import FormInput from '../components/FormInput'
 import Button from '../components/Button'
 
-interface SignInProps {
-  onSignIn: () => void
-}
-
-export default function SignIn({ onSignIn }: SignInProps) {
-  const [username, setUsername] = useState('')
+export default function SignIn() {
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [rememberMe, setRememberMe] = useState(false)
+  const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
+  const error = useSelector((state: RootState) => state.auth.error)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    onSignIn()
-    navigate('/profile')
+    const result = await dispatch(login({ email, password }))
+    if (login.fulfilled.match(result)) {
+      await dispatch(getProfile())
+      navigate('/profile')
+    }
   }
 
   return (
@@ -28,8 +33,8 @@ export default function SignIn({ onSignIn }: SignInProps) {
           <FormInput
             label="Username"
             id="username"
-            value={username}
-            onChange={setUsername}
+            value={email}
+            onChange={setEmail}
           />
           <FormInput
             label="Password"
@@ -47,6 +52,7 @@ export default function SignIn({ onSignIn }: SignInProps) {
             />
             <label htmlFor="remember-me">Remember me</label>
           </div>
+          {error && <p className="error-message">{error}</p>}
           <Button className="sign-in-button" type="submit">Sign In</Button>
         </form>
       </section>
