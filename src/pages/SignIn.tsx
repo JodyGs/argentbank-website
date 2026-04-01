@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import FormInput from '../components/FormInput'
+import Button from '../components/Button'
 
 interface SignInProps {
   onSignIn: () => void
@@ -23,24 +25,19 @@ export default function SignIn({ onSignIn }: SignInProps) {
         <i className="fa fa-user-circle sign-in-icon"></i>
         <h1>Sign In</h1>
         <form onSubmit={handleSubmit}>
-          <div className="input-wrapper">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div className="input-wrapper">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+          <FormInput
+            label="Username"
+            id="username"
+            value={username}
+            onChange={setUsername}
+          />
+          <FormInput
+            label="Password"
+            id="password"
+            type="password"
+            value={password}
+            onChange={setPassword}
+          />
           <div className="input-remember">
             <input
               type="checkbox"
@@ -50,7 +47,7 @@ export default function SignIn({ onSignIn }: SignInProps) {
             />
             <label htmlFor="remember-me">Remember me</label>
           </div>
-          <button className="sign-in-button" type="submit">Sign In</button>
+          <Button className="sign-in-button" type="submit">Sign In</Button>
         </form>
       </section>
     </main>

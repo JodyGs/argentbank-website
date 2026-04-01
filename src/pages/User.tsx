@@ -1,3 +1,6 @@
+import AccountCard from '../components/AccountCard'
+import Button from '../components/Button'
+
 interface Account {
   title: string
   amount: string
@@ -30,20 +33,11 @@ export default function User() {
           Welcome back<br />
           Tony Jarvis!
         </h1>
-        <button className="edit-button">Edit Name</button>
+        <Button className="edit-button">Edit Name</Button>
       </div>
       <h2 className="sr-only">Accounts</h2>
       {accounts.map((account) => (
-        <section className="account" key={account.title}>
-          <div className="account-content-wrapper">
-            <h3 className="account-title">{account.title}</h3>
-            <p className="account-amount">{account.amount}</p>
-            <p className="account-amount-description">{account.description}</p>
-          </div>
-          <div className="account-content-wrapper cta">
-            <button className="transaction-button">View transactions</button>
-          </div>
-        </section>
+        <AccountCard key={account.title} {...account} />
       ))}
     </main>
   )
