@@ -1,15 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { loginUser } from '../services/api'
 
+const TOKEN_KEY = 'token'
+
 interface AuthState {
   token: string | null
   isLoggedIn: boolean
   error: string | null
 }
 
+const storedToken = localStorage.getItem(TOKEN_KEY)
+
 const initialState: AuthState = {
-  token: null,
-  isLoggedIn: false,
+  token: storedToken,
+  isLoggedIn: !!storedToken,
   error: null,
 }
 
@@ -29,6 +33,7 @@ const authSlice = createSlice({
       state.token = null
       state.isLoggedIn = false
       state.error = null
+      localStorage.removeItem(TOKEN_KEY)
     },
   },
   extraReducers: (builder) => {
@@ -37,6 +42,7 @@ const authSlice = createSlice({
         state.token = action.payload
         state.isLoggedIn = true
         state.error = null
+        localStorage.setItem(TOKEN_KEY, action.payload)
       })
       .addCase(login.rejected, (state, action) => {
         state.error = action.error.message ?? 'Login failed'

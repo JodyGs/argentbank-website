@@ -1,15 +1,12 @@
-const BASE_URL = 'http://localhost:3001/api/v1'
+import axios from 'axios'
+
+const api = axios.create({
+  baseURL: 'http://localhost:3001/api/v1',
+  headers: { 'Content-Type': 'application/json' },
+})
 
 export async function loginUser(email: string, password: string): Promise<string> {
-  const response = await fetch(`${BASE_URL}/user/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password }),
-  })
-  const data = await response.json()
-  if (data.status !== 200) {
-    throw new Error(data.message)
-  }
+  const { data } = await api.post('/user/login', { email, password })
   return data.body.token
 }
 
@@ -21,14 +18,11 @@ export interface UserProfile {
 }
 
 export async function fetchUserProfile(token: string): Promise<UserProfile> {
-  const response = await fetch(`${BASE_URL}/user/profile`, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${token}` },
-  })
-  const data = await response.json()
-  if (data.status !== 200) {
-    throw new Error(data.message)
-  }
+  const { data } = await api.post(
+    '/user/profile',
+    {},
+    { headers: { Authorization: `Bearer ${token}` } },
+  )
   return data.body
 }
 
@@ -37,17 +31,10 @@ export async function updateUserProfile(
   firstName: string,
   lastName: string,
 ): Promise<UserProfile> {
-  const response = await fetch(`${BASE_URL}/user/profile`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ firstName, lastName }),
-  })
-  const data = await response.json()
-  if (data.status !== 200) {
-    throw new Error(data.message)
-  }
+  const { data } = await api.put(
+    '/user/profile',
+    { firstName, lastName },
+    { headers: { Authorization: `Bearer ${token}` } },
+  )
   return data.body
 }
